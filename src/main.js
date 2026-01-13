@@ -88,7 +88,7 @@ function testChart(canvasId, dataPoints) {
         data: data,
     };
 
-    const canvas = document.getElementById(canvasId)
+    const canvas = document.getElementById(canvasId);
 
     new Chart(canvas, config)
 
