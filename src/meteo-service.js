@@ -5,17 +5,53 @@ export class MeteoService {
     constructor(){}
 
     getMeteoData(){
-        fetch(MeteoService.API_URL)
+       return fetch(MeteoService.API_URL)
         .then(response => response.json())
         .then(data => this.transformData(data))
-        .then(transformedData => console.log(transformedData));
+        .then(transformedData => transformedData);
     }
 
     transformData(data){
 
+        console.log(data);
+
+        const hourlyData = data.hourly;
+
+        // console.log("solo i dati orari", hourlyData);
+
+        const times = hourlyData.time;
+        // console.log("times", times);
+        const temperatures = hourlyData.temperature_2m;
+        // console.log("temp", temperatures);
+        const codes = hourlyData.weather_code;
+        // console.log("codes", codes);
+        const winds = hourlyData.wind_speed_10m;
+        // console.log("winds", winds);
+        const rains = hourlyData.rain;
+        // console.log("rains", rains)
+
+        const newArray = [];
+        for (let i = 0; i < times.length; i++) {
+            const time = times[i];
+            const temperature = temperatures[i];
+            const rain = rains [i];
+            const code = codes [i];
+            const wind = winds [i];
+
+            const hourData = {
+                time: time,
+                temperature: temperature,
+                rain: rain,
+                code: code,
+                wind: wind
+            }
+
+            newArray.push(hourData);
+            
+        }
+        return newArray;
 
 
-        //[{time:"2026-01-17T14:00", temperaure: 14, rain: 3, code: 0, wind: 12},
         // {time:"2026-01-17T15:00", temperaure: 17 rain: 3, code: 0, wind: 12},
         // {time:"2026-01-17T16:00", temperaure: 16, rain: 3, code: 0, wind: 12}]
     }
